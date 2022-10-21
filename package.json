@@ -1,0 +1,53 @@
+{
+  "name": "@fabric/wiki",
+  "version": "0.1.0-dev",
+  "description": "wiki.fabric.pub",
+  "main": "services/wiki.js",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "coverage": "c8 npm test",
+    "deploy": "npm run build && fabric-http",
+    "docs": "npm run make:docs && fabric-http docs",
+    "make:api": "jsdoc2md --configure jsdoc.json --files services/**.js README.md > API.md",
+    "make:coverage": "npm run coverage && c8 report --reporter html",
+    "make:docs": "npm run make:api && node_modules/.bin/jsdoc -c jsdoc.json services/**.js node_modules/@fabric/http/types/site.js DEVELOPERS.md -d docs/ && glob-run js-beautify --indent-size 2 -r docs/**.html",
+    "reports": "npm run report:install && npm run make:coverage && npm run report:todo",
+    "report:install": "rm -rf node_modules && rm package-lock.json && echo \"$ npm i\" > reports/install.log && npm i >> reports/install.log",
+    "report:todo": "grep --exclude-dir=.git --exclude-dir=_book --exclude-dir=assets --exclude-dir=node_modules --exclude-dir=reports --exclude-dir=coverage --exclude-dir=docs --exclude-dir=stores -rEI \"TODO|FIXME\" . > reports/TODO.txt",
+    "review:coverage": "npm run make:coverage && fabric-http reports/coverage",
+    "start": "npm run build && fabric-http --assets assets",
+    "test": "NODE_ENV=test mocha tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FabricLabs/wiki.git"
+  },
+  "keywords": [
+    "fabric",
+    "bitcoin",
+    "wiki"
+  ],
+  "author": "Fabric Labs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FabricLabs/wiki/issues"
+  },
+  "homepage": "https://github.com/FabricLabs/wiki#readme",
+  "dependencies": {
+    "@fabric/core": "FabricLabs/fabric#feature/grpc",
+    "@fabric/http": "FabricLabs/fabric-http#feature/compiler"
+  },
+  "devDependencies": {
+    "c8": "7.12.0",
+    "jsdoc-to-markdown": "7.1.1",
+    "ts-mocha": "10.0.0",
+    "typescript": "4.8.4"
+  },
+  "c8": {
+    "exclude": [
+      "tests"
+    ],
+    "report-dir": "./reports/coverage",
+    "temp-dir": "./reports/c8"
+  }
+}

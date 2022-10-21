@@ -1,0 +1,10 @@
+{
+  "name": "@fabric/wiki",
+  "chat": "https://chat.fabric.pub/#/room/#wiki:fabric.pub",
+  "source": "https://github.com/FabricLabs/wiki",
+  "templates": {
+    "default": {
+      "layoutFile": "views/docs.tmpl"
+    }
+  }
+}

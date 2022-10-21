@@ -1,0 +1,1 @@
+./package.json:    "report:todo": "grep --exclude-dir=.git --exclude-dir=_book --exclude-dir=assets --exclude-dir=node_modules --exclude-dir=reports --exclude-dir=coverage --exclude-dir=docs --exclude-dir=stores -rEI \"TODO|FIXME\" . > reports/TODO.txt",
